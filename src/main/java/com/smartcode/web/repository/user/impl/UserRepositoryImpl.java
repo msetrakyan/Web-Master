@@ -37,7 +37,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User create(User user) {
-
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(
