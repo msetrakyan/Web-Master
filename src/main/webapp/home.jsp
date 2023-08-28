@@ -14,6 +14,8 @@
     }
 %>
 
+
+
 <h2>Welcome dear <%=request.getSession().getAttribute("username")%>
 </h2>
 
