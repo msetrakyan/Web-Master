@@ -19,4 +19,5 @@ public interface UserRepository {
 
     List<User> findByName(String string);
 
+    User getByUsername(String username);
 }

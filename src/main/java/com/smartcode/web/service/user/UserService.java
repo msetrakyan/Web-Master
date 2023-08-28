@@ -10,4 +10,8 @@ public interface UserService {
 
 
     void transfer(User from, User to, BigDecimal amount) throws SQLException;
+
+    void register(User user);
+
+    void login(String username, String password);
 }

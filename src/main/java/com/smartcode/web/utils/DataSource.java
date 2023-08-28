@@ -15,8 +15,8 @@ public class DataSource {
 
     private DataSource() {
         try {
-            connection = DriverManager.getConnection(url, username, password);
             Class.forName(driver);
+            connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connected Successfully");
         } catch (SQLException ex) {
             System.out.println("Database Connection Creation Failed : " + ex.getMessage());

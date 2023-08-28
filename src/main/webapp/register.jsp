@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome page</title>
+    <title>Login</title>
 </head>
 <body>
 
-<h1>Welcome to our shop</h1>
+<h2>Welcome to register page</h2>
+
+<%%>
 
 <div style="border: black solid 1px">
     <h3>Register</h3>
@@ -15,12 +17,13 @@
         LastName: <input type="text" name="lastName"></br>
         Age: <input type="number" name="age"></br>
         Username: <input type="text" name="username"></br>
-        Password: <input type="text" name="password"></br>
+        Password: <input type="password" name="password"></br>
 
         <input type="submit" value="register">
 
     </form>
 </div>
+
 
 </body>
 </html>
