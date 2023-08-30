@@ -19,5 +19,21 @@
 <h2>Welcome dear <%=request.getSession().getAttribute("username")%>
 </h2>
 
+<h3>Write a comment</h3>
+
+
+<form action="/home" method="get">
+    Title <input type="text" name="title"></br>
+    Description <input type="text" name="description"></br>
+    <input type="submit" value="submit">
+</form>
+
+<form action="/comment" method="post">
+<input type="submit" value="CommentSection">
+</form>
+
+
+
+
 </body>
 </html>

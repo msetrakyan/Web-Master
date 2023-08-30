@@ -46,4 +46,14 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>comment</servlet-name>
+    <servlet-class>com.smartcode.web.controller.CommentServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>comment</servlet-name>
+    <url-pattern>/comment</url-pattern>
+  </servlet-mapping>
+
 </web-app>

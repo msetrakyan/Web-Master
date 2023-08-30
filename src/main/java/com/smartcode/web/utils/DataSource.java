@@ -8,7 +8,7 @@ public class DataSource {
 
     private Connection connection;
     private static DataSource instance;
-    private final String url = "jdbc:postgresql://127.0.0.1:5432/test1";
+    private final String url = "jdbc:postgresql://localhost:5432/postgres";
     private final String username = "postgres";
     private final String password = "postgres";
     private final String driver = "org.postgresql.Driver";
