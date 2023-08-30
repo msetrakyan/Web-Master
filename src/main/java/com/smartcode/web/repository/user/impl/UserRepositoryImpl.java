@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private Connection connection = DataSource.getInstance().getConnection();
+    private final Connection connection = DataSource.getInstance().getConnection();
 
     public UserRepositoryImpl() {
         try {
