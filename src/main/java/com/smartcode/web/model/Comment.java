@@ -19,6 +19,7 @@ public class Comment {
 
     private String title;
     private String description;
+    private Integer userId;
 
     @Override
     public String toString() {

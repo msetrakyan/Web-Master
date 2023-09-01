@@ -25,7 +25,7 @@ public class CommentServlet extends HttpServlet {
 
         String username = (String)req.getSession().getAttribute("username");
 
-        List<Comment> list = commentRepository.getAll(userRepository.getByUsername(username));
+        List<Comment> list = commentRepository.getAll((int)req.getSession().getAttribute("id"));
 
         PrintWriter printWriter = resp.getWriter();
 

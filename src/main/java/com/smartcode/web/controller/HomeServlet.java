@@ -6,6 +6,10 @@ import com.smartcode.web.repository.comment.CommentRepository;
 import com.smartcode.web.repository.comment.impl.CommentRepositoryImpl;
 import com.smartcode.web.repository.user.UserRepository;
 import com.smartcode.web.repository.user.impl.UserRepositoryImpl;
+import com.smartcode.web.service.comment.CommentService;
+import com.smartcode.web.service.comment.impl.CommentServiceImpl;
+import com.smartcode.web.service.user.UserService;
+import com.smartcode.web.service.user.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,19 +28,22 @@ public class HomeServlet extends HttpServlet {
 
         UserRepository userRepository = new UserRepositoryImpl();
 
+        UserService userService = new UserServiceImpl(userRepository);
+
         User user = userRepository.getByUsername((String)req.getSession().getAttribute("username"));
 
-        Comment comment = new Comment(title, description);
+        Comment comment = new Comment(title, description, (int)req.getSession().getAttribute("id"));
 
         CommentRepository commentRepository = new CommentRepositoryImpl();
 
-        if(commentRepository.read(user, title) == null) {
-            commentRepository.create(user, comment);
+        CommentService commentService = new CommentServiceImpl(commentRepository);
+
+        if(commentService.get(user, comment.getTitle()) == null) {
+            commentService.create(user, comment.getTitle(),comment.getDescription());
         }
 
+        req.getRequestDispatcher("home.jsp").forward(req, resp);
     }
-
-
 
 
 

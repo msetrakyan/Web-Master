@@ -25,13 +25,16 @@ public class LoginServlet extends HttpServlet {
             String password = req.getParameter("password");
 
             userService.login(username, password);
+
             req.getSession().setAttribute("username", username);
+            req.getSession().setAttribute("id", userRepository.getByUsername(username).getId());
             req.getSession().setMaxInactiveInterval(36000);
             req.getRequestDispatcher("home.jsp").forward(req, resp);
         } catch (ValidationException e) {
             req.setAttribute("message", e.getMessage());
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }
+
     }
 
 

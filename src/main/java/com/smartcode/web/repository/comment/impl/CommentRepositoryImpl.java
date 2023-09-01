@@ -17,7 +17,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     private final Connection connection = DataSource.getInstance().getConnection();
 
 
-    public Comment create(User user, Comment comment) {
+    public Comment create(Comment comment) {
         PreparedStatement preparedStatement = null;
         try {
              preparedStatement = connection.prepareStatement("""
@@ -27,7 +27,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 
             preparedStatement.setString(1, comment.getTitle());
             preparedStatement.setString(2,comment.getDescription());
-            preparedStatement.setInt(3,user.getId());
+            preparedStatement.setInt(3,comment.getUserId());
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -42,39 +42,12 @@ public class CommentRepositoryImpl implements CommentRepository {
         return comment;
     }
 
-    public String read(User user, String title) {
 
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        String desc = null;
+    public boolean delete(Comment comment) {
 
-        try {
-            preparedStatement = connection.prepareStatement("""
-        
-                    SELECT * FROM comments WHERE title = ?
-        """);
-            preparedStatement.setString(1, title);
-            resultSet = preparedStatement.executeQuery();
-
-            resultSet.next();
-
-            desc =  resultSet.getString(3);
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                resultSet.close();
-                preparedStatement.close();
-
-            } catch (SQLException exception)  {
-                System.out.println(exception.getMessage());
-            }
+        if(comment == null) {
+            return false;
         }
-       return desc;
-    }
-
-    public boolean delete(User user, String title) {
 
         PreparedStatement preparedStatement = null;
 
@@ -82,8 +55,8 @@ public class CommentRepositoryImpl implements CommentRepository {
             preparedStatement = connection.prepareStatement("""
         DELETE FROM comments WHERE title = ? and users_id = ?
         """);
-            preparedStatement.setString(1, title);
-            preparedStatement.setInt(2, user.getId());
+            preparedStatement.setString(1, comment.getTitle());
+            preparedStatement.setInt(2, comment.getUserId());
             return preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -91,42 +64,12 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
     }
 
-    public void edit(User user, Comment comment) {
-        delete(user, comment.getTitle());
-        create(user, comment);
+
+
+    public void edit(Comment comment) {
+        delete(comment);
+        create(comment);
     }
-
-    public List<Comment> getAll(User user) {
-
-        List<Comment> list = new ArrayList<>();
-
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            preparedStatement = connection.prepareStatement(("""
-            SELECT * FROM comments WHERE users_id = ?
-            """));
-            preparedStatement.setInt(1, user.getId());
-
-            resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
-                Comment comment = fromResultSet(resultSet);
-                list.add(comment);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                preparedStatement.close();
-                resultSet.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return list;
-    }
-
 
 
     private Comment fromResultSet(ResultSet resultSet) {
@@ -140,4 +83,35 @@ public class CommentRepositoryImpl implements CommentRepository {
         return comment;
     }
 
+    @Override
+    public List<Comment> getAll(Integer id) {
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Comment> list = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("""
+                    SELECT * FROM comments WHERE users_id = ?
+        """);
+        preparedStatement.setInt(1, id);
+        resultSet = preparedStatement.executeQuery();
+         list = new ArrayList<>();
+        while(resultSet.next()) {
+            Comment comment = fromResultSet(resultSet);
+            list.add(comment);
+        }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+            try {
+                preparedStatement.close();
+                resultSet.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package com.smartcode.web.service.user.impl;
 
-
 import com.smartcode.web.exception.UsernameAlreadyExistsException;
 import com.smartcode.web.exception.ValidationException;
 import com.smartcode.web.model.User;
@@ -86,7 +85,6 @@ public class UserServiceImpl implements UserService {
 
         connection.setTransactionIsolation(8);
         List<User> all = userRepository.getAll();
-
 
     }
 }

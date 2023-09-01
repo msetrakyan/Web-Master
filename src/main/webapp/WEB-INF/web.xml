@@ -56,4 +56,14 @@
     <url-pattern>/comment</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>commentDelete</servlet-name>
+    <servlet-class>com.smartcode.web.controller.CommentDeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>commentDelete</servlet-name>
+    <url-pattern>/commentDelete</url-pattern>
+  </servlet-mapping>
+
 </web-app>
