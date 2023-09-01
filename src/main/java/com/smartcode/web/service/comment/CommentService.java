@@ -16,10 +16,4 @@ public interface CommentService {
     boolean delete(User user, String title);
 
     List<Comment> getAll(User user);
-
-
-
-
-
-
 }
