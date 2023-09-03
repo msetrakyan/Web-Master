@@ -5,15 +5,6 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
   
-  <servlet>
-    <servlet-name>test</servlet-name>
-    <servlet-class>com.smartcode.web.controller.TestServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>test</servlet-name>
-    <url-pattern>/test</url-pattern>
-  </servlet-mapping>
 
   <servlet>
     <servlet-name>homeServlet</servlet-name>
@@ -46,6 +37,7 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
 
+
   <servlet>
     <servlet-name>comment</servlet-name>
     <servlet-class>com.smartcode.web.controller.CommentServlet</servlet-class>
@@ -57,13 +49,29 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>commentDelete</servlet-name>
-    <servlet-class>com.smartcode.web.controller.CommentDeleteServlet</servlet-class>
+    <servlet-name>commentUpdate</servlet-name>
+    <servlet-class>com.smartcode.web.controller.CommentUpdateServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>commentDelete</servlet-name>
-    <url-pattern>/commentDelete</url-pattern>
+    <servlet-name>commentUpdate</servlet-name>
+    <url-pattern>/commentUpdate</url-pattern>
   </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>changePassword</servlet-name>
+    <servlet-class>com.smartcode.web.controller.PasswordServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>changePassword</servlet-name>
+    <url-pattern>/changePassword</url-pattern>
+  </servlet-mapping>
+
+
+
+
+
 
 </web-app>

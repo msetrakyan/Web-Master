@@ -1,6 +1,7 @@
 package com.smartcode.web.repository.user.impl;
 
 
+import com.smartcode.web.exception.ValidationException;
 import com.smartcode.web.model.User;
 import com.smartcode.web.repository.user.UserRepository;
 import com.smartcode.web.utils.DataSource;
@@ -123,7 +124,6 @@ public class UserRepositoryImpl implements UserRepository {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = ?");
             preparedStatement.setInt(1, id);
             int i = preparedStatement.executeUpdate();
-            System.out.println(i);
             preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -152,6 +152,23 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return null;
     }
+
+
+    public boolean changePassword(User user, String oldPass, String newPass) {
+
+        if(!user.getPassword().equals(oldPass)) {
+
+            throw new ValidationException("Wrong password");
+        } else {
+            user.setPassword(newPass);
+            update(user);
+            return true;
+        }
+
+    }
+
+
+
 
     private User fromResultSet(ResultSet resultSet) throws SQLException {
         User user = new User();

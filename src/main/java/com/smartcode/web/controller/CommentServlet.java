@@ -1,10 +1,14 @@
 package com.smartcode.web.controller;
 
 import com.smartcode.web.model.Comment;
+import com.smartcode.web.model.User;
 import com.smartcode.web.repository.comment.CommentRepository;
 import com.smartcode.web.repository.comment.impl.CommentRepositoryImpl;
 import com.smartcode.web.repository.user.UserRepository;
 import com.smartcode.web.repository.user.impl.UserRepositoryImpl;
+import com.smartcode.web.service.comment.CommentService;
+import com.smartcode.web.service.comment.impl.CommentServiceImpl;
+import com.smartcode.web.service.user.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,23 +19,36 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class CommentServlet extends HttpServlet {
-    
-    @Override
+
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         CommentRepository commentRepository = new CommentRepositoryImpl();
 
+        CommentService commentService = new CommentServiceImpl(commentRepository);
+
         UserRepository userRepository = new UserRepositoryImpl();
 
-        String username = (String)req.getSession().getAttribute("username");
+        User user = userRepository.getById((Integer)req.getSession().getAttribute("id"));
 
-        List<Comment> list = commentRepository.getAll((int)req.getSession().getAttribute("id"));
+        System.out.println(req.getParameter("title"));
 
-        PrintWriter printWriter = resp.getWriter();
+        commentService.delete(user, req.getParameter("title"));
 
-        for(int i = 0; i < list.size(); i++) {
-          printWriter.print(list.get(i));
-        }
+        req.getRequestDispatcher("home.jsp").forward(req,resp);
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        CommentRepository commentRepository = new CommentRepositoryImpl();
+
+        CommentService commentService = new CommentServiceImpl(commentRepository);
+
+        req.getSession().setAttribute("title", req.getParameter("title"));
+
+        req.getRequestDispatcher("commentUpdate.jsp").forward(req, resp);
 
     }
+
+
+
 }

@@ -13,7 +13,21 @@
 </head>
 <body>
 
-<%
+<form action="/home" method="get">
+      <input type="submit" value="logout">
+</form>
+
+<form action="changePassword.jsp" method="get">
+    <input type="submit" value="change">
+</form>
+
+
+
+
+
+
+
+        <%
     String username = (String) request.getSession().getAttribute("username");
     if (username == null) {
         request.setAttribute("message", "Login first!!!");
@@ -28,17 +42,14 @@
 
 <h3>Write a comment</h3>
 
-<form action="/home" method="get">
+<form action="/home" method="post">
     Title <input type="text" name="title"></br>
     Description <input type="text" name="description"></br>
     <input type="submit" value="submit">
 </form>
 
 
-<form action="/commentDelete" method="get">
-    Title <input type="text" name="title"></br>
-    <input type="submit" value="submit">
-</form>
+
 
 
 
@@ -65,7 +76,22 @@
             <td>
                 <%=list.get(i).getDescription()%>
             </td>
+            <td>
+                <form action="/comment" method="post">
+                    <input type="hidden" name="title" value="<%=list.get(i).getTitle()%>" />
+                    <input type="submit" value="delete">
+                </form>
+
+            </td>
+            <td>
+                <form action="/comment" method="get">
+                    <input type="hidden" name="title" value="<%=list.get(i).getTitle()%>" />
+                    <input type="submit" value="update">
+                </form>
+            </td>
+
         </tr>
+
 <%
     }
 %>

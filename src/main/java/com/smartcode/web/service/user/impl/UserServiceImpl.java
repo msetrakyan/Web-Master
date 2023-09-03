@@ -66,9 +66,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void login(String username, String password) {
         User byUsername = userRepository.getByUsername(username);
-        if (!byUsername.getPassword().equals(password)){
-            throw new ValidationException("Invalid login or password");
+        if(byUsername == null) {
+            throw new ValidationException("Login doesn't exist");
         }
+        else if(!byUsername.getPassword().equals(password)){
+            throw new ValidationException("Wrong password");
+        }
+
     }
 
     private void validateUserRegistration(User user) {
@@ -87,4 +91,12 @@ public class UserServiceImpl implements UserService {
         List<User> all = userRepository.getAll();
 
     }
+
+
+    public boolean changePassword(User user, String oldPass, String newPass) {
+         return userRepository.changePassword(user, oldPass, newPass);
+    }
+
+
+
 }

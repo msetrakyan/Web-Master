@@ -21,7 +21,7 @@ public class HomeServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String title = req.getParameter("title");
         String description = req.getParameter("description");
@@ -44,6 +44,18 @@ public class HomeServlet extends HttpServlet {
 
         req.getRequestDispatcher("home.jsp").forward(req, resp);
     }
+
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.getSession().invalidate();
+
+        resp.sendRedirect("login.jsp");
+
+    }
+
+
+
 
 
 

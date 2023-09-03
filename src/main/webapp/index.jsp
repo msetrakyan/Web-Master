@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Welcome page</title>
 </head>
+
 <body>
 
 <h1>Welcome to our shop</h1>

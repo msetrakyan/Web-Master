@@ -20,4 +20,6 @@ public interface UserRepository {
     List<User> findByName(String string);
 
     User getByUsername(String username);
+
+    boolean changePassword(User user, String oldPass, String newPass);
 }
