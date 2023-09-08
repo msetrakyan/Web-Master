@@ -12,12 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceJDBCImpl implements CommentService {
 
     private final Connection connection = DataSource.getInstance().getConnection();
     private CommentRepository commentRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository) {
+
+
+
+    public CommentServiceJDBCImpl(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
 
@@ -34,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()) {
-                Comment comment = new Comment(resultSet.getString("title"),
+                Comment comment = new Comment(null, resultSet.getString("title"),
                         resultSet.getString("description"),
                         resultSet.getInt("users_id"));
                 return comment;
@@ -51,28 +54,22 @@ public class CommentServiceImpl implements CommentService {
 
     public Comment create(User user, String title, String description) {
 
-        Comment comment = new Comment(title, description, user.getId());
+        Comment comment = new Comment(null, title, description, user.getId());
 
         return commentRepository.create(comment);
     }
 
     public boolean delete(User user, String title) {
 
-        Comment comment = new Comment(title, "", user.getId());
+        Comment comment = new Comment(null, title, "", user.getId());
 
         return commentRepository.delete(comment);
 
     }
 
     public List<Comment> getAll(User user) {
-
         return commentRepository.getAll(user.getId());
-
     }
-
-
-
-
 
 
 

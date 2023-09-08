@@ -1,7 +1,6 @@
 package com.smartcode.web.repository.comment.impl;
 
 import com.smartcode.web.model.Comment;
-import com.smartcode.web.model.User;
 import com.smartcode.web.repository.comment.CommentRepository;
 import com.smartcode.web.utils.DataSource;
 
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentRepositoryImpl implements CommentRepository {
+public class CommentRepositoryJDBCImpl implements CommentRepository {
 
     private final Connection connection = DataSource.getInstance().getConnection();
 

@@ -2,9 +2,11 @@ package com.smartcode.web.controller;
 
 import com.smartcode.web.model.User;
 import com.smartcode.web.repository.user.UserRepository;
-import com.smartcode.web.repository.user.impl.UserRepositoryImpl;
+import com.smartcode.web.repository.user.impl.UserRepositoryJDBCImpl;
+import com.smartcode.web.repository.user.impl.UserRepositoryJPAImpl;
 import com.smartcode.web.service.user.UserService;
-import com.smartcode.web.service.user.impl.UserServiceImpl;
+import com.smartcode.web.service.user.impl.UserServiceJDBCImpl;
+import com.smartcode.web.service.user.impl.UserServiceJPAImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +17,8 @@ import java.math.BigDecimal;
 
 public class RegisterServlet extends HttpServlet {
 
-    private final UserRepository userRepository = new UserRepositoryImpl();
-    private final UserService userService = new UserServiceImpl(userRepository);
+    private final UserRepository userRepository = new UserRepositoryJPAImpl();
+    private final UserService userService = new UserServiceJPAImpl(userRepository);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        User user = new User(null, name, lastName, middleName, username, age, password, new BigDecimal(0));
+        User user = new User(null, name, lastName, middleName, username, age, password);
 
         userService.register(user);
 

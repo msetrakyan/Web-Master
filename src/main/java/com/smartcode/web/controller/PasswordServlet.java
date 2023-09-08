@@ -3,9 +3,11 @@ package com.smartcode.web.controller;
 import com.smartcode.web.exception.ValidationException;
 import com.smartcode.web.model.User;
 import com.smartcode.web.repository.user.UserRepository;
-import com.smartcode.web.repository.user.impl.UserRepositoryImpl;
+import com.smartcode.web.repository.user.impl.UserRepositoryJDBCImpl;
+import com.smartcode.web.repository.user.impl.UserRepositoryJPAImpl;
 import com.smartcode.web.service.user.UserService;
-import com.smartcode.web.service.user.impl.UserServiceImpl;
+import com.smartcode.web.service.user.impl.UserServiceJDBCImpl;
+import com.smartcode.web.service.user.impl.UserServiceJPAImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,9 +24,9 @@ public class PasswordServlet extends HttpServlet {
 
 
 
-            UserRepository userRepository = new UserRepositoryImpl();
+            UserRepository userRepository = new UserRepositoryJPAImpl();
 
-            UserService userService = new UserServiceImpl(userRepository);
+            UserService userService = new UserServiceJPAImpl(userRepository);
 
 
             User user = userRepository.getById((Integer)req.getSession().getAttribute("id"));

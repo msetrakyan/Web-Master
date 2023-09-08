@@ -1,32 +1,31 @@
 package com.smartcode.web.controller;
 
-import com.smartcode.web.model.Comment;
 import com.smartcode.web.model.User;
 import com.smartcode.web.repository.comment.CommentRepository;
-import com.smartcode.web.repository.comment.impl.CommentRepositoryImpl;
+import com.smartcode.web.repository.comment.impl.CommentRepositoryJDBCImpl;
+import com.smartcode.web.repository.comment.impl.CommentRepositoryJPAImpl;
 import com.smartcode.web.repository.user.UserRepository;
-import com.smartcode.web.repository.user.impl.UserRepositoryImpl;
+import com.smartcode.web.repository.user.impl.UserRepositoryJDBCImpl;
+import com.smartcode.web.repository.user.impl.UserRepositoryJPAImpl;
 import com.smartcode.web.service.comment.CommentService;
-import com.smartcode.web.service.comment.impl.CommentServiceImpl;
-import com.smartcode.web.service.user.UserService;
+import com.smartcode.web.service.comment.impl.CommentServiceJDBCImpl;
+import com.smartcode.web.service.comment.impl.CommentServiceJPAImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 public class CommentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        CommentRepository commentRepository = new CommentRepositoryImpl();
+        CommentRepository commentRepository = new CommentRepositoryJPAImpl();
 
-        CommentService commentService = new CommentServiceImpl(commentRepository);
+        CommentService commentService = new CommentServiceJPAImpl(commentRepository);
 
-        UserRepository userRepository = new UserRepositoryImpl();
+        UserRepository userRepository = new UserRepositoryJPAImpl();
 
         User user = userRepository.getById((Integer)req.getSession().getAttribute("id"));
 
@@ -39,9 +38,9 @@ public class CommentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        CommentRepository commentRepository = new CommentRepositoryImpl();
+        CommentRepository commentRepository = new CommentRepositoryJDBCImpl();
 
-        CommentService commentService = new CommentServiceImpl(commentRepository);
+        CommentService commentService = new CommentServiceJDBCImpl(commentRepository);
 
         req.getSession().setAttribute("title", req.getParameter("title"));
 

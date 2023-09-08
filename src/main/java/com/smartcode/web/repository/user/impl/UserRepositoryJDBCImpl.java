@@ -12,11 +12,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserRepositoryImpl implements UserRepository {
+public class UserRepositoryJDBCImpl implements UserRepository {
 
     private final Connection connection = DataSource.getInstance().getConnection();
 
-    public UserRepositoryImpl() {
+    public UserRepositoryJDBCImpl() {
         try {
             connection.createStatement().execute(
                     """
@@ -41,14 +41,13 @@ public class UserRepositoryImpl implements UserRepository {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(
-                    "INSERT INTO users (name, last_name, middle_name, age, username, password,balance) values(?,?,?,?,?,?,?)");
+                    "INSERT INTO users (name, last_name, middle_name, age, username, password,balance) values(?,?,?,?,?,?)");
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getMiddleName());
             preparedStatement.setInt(4, user.getAge());
             preparedStatement.setString(5, user.getUsername());
             preparedStatement.setString(6, user.getPassword());
-            preparedStatement.setBigDecimal(7, user.getBalance());
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -74,7 +73,6 @@ public class UserRepositoryImpl implements UserRepository {
                             age = ?,
                             username = ?,
                             password = ?,
-                            balance = ?
                             WHERE id = ?
                                 """);
 
@@ -84,7 +82,6 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setInt(4, user.getAge());
             preparedStatement.setString(5, user.getUsername());
             preparedStatement.setString(6, user.getPassword());
-            preparedStatement.setBigDecimal(7, user.getBalance());
             preparedStatement.setInt(8, user.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -179,7 +176,6 @@ public class UserRepositoryImpl implements UserRepository {
         user.setUsername(resultSet.getString("username"));
         user.setPassword(resultSet.getString("password"));
         user.setAge(resultSet.getInt("age"));
-        user.setBalance(resultSet.getBigDecimal("balance"));
         return user;
     }
 }
